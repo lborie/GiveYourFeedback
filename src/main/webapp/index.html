@@ -8,7 +8,7 @@
 <body>
 
 <!-- Static navbar -->
-<div class="navbar navbar-default navbar-static-top">
+<div class="navbar navbar-default navbar-static-top" ng-controller="homeController">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,7 +23,7 @@
                 <li><a href="#/conference">Conférences</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/login">Login</a></li>
+                <li><a href="#" ng-click='auth()'>{{loginAction}}</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->
@@ -37,11 +37,19 @@
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
 <script type="text/javascript" src="/js/app.js"></script>
 <script type="text/javascript" src="/js/services/conferenceService.js"></script>
 <script type="text/javascript" src="/js/controllers/conferenceController.js"></script>
 <script type="text/javascript" src="/js/controllers/homeController.js"></script>
+<script type="text/javascript">
+    function init() {
+        var apiRoot = '//' + window.location.host + '/_ah/api';
+        var callback = function() {}
+        gapi.client.load('feedbackyourjug', 'v1', callback, apiRoot);
+        gapi.client.load('oauth2', 'v2', callback);
+    }
+</script>
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
 </div>
 </body>
 </html>
