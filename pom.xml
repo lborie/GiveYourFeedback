@@ -113,6 +113,9 @@
                 <version>${appengine.target.version}</version>
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
+                    <jvmFlags>
+                        <jvmFlag>-Ddatastore.default_high_rep_job_policy_unapplied_job_pct=50</jvmFlag>
+                    </jvmFlags>
                 </configuration>
                 <executions>
                     <execution>

@@ -1,5 +1,5 @@
 <!-- Main component for a primary marketing message or call to action -->
 <div class="jumbotron" ng-repeat="session in sessions">
     <h1>{{ session.title }}</h1>
-    <p><a class="btn btn-primary" ng-click="displaySession(session)">Afficher le détail</a></p>
+    <p><a class="btn btn-primary" ng-href="#/conference/{{ session.sessionUrl }}">Afficher le détail</a></p>
 </div>

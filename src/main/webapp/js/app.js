@@ -16,8 +16,12 @@ feedbackApp.config(function($routeProvider) {
             templateUrl: 'views/conferenceList.html',
             controller: 'conferenceController'
         })
-        .when('/conference/:conferenceId',{
+        .when('/conference/:idConference',{
             templateUrl: 'views/conference.html',
+            controller: 'conferenceController'
+        })
+        .when('/conference/:idConference/:idSession',{
+            templateUrl: 'views/session.html',
             controller: 'conferenceController'
         })
         .otherwise({
