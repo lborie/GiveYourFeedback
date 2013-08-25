@@ -3,7 +3,7 @@
 /**
  * Controller of the conference page
  */
-feedbackApp.controller("conferenceController" ,function ($scope, ConferenceService) {
+feedbackApp.controller("conferenceController" ,function ($scope, $routeParams, ConferenceService) {
 
     $scope.project = 'Start Endpoints';
 
@@ -12,7 +12,10 @@ feedbackApp.controller("conferenceController" ,function ($scope, ConferenceServi
     });
 
     $scope.displayConference = function(conference) {
-        //TODO
+        console.log($routeParams.conferenceId);
     }
 
+    $scope.displaySession = function(session) {
+        //TODO
+    }
 });

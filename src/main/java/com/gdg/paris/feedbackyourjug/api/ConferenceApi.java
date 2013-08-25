@@ -15,7 +15,7 @@ import java.util.List;
 @Api(
         name = "feedbackyourjug",
         version = "v1",
-        clientIds = {Ids.WEB_CLIENT_ID, Ids.ANDROID_CLIENT_ID, Ids.IOS_CLIENT_ID},
+        clientIds = {Ids.WEB_CLIENT_ID, Ids.ANDROID_CLIENT_ID, Ids.IOS_CLIENT_ID, Ids.API_EXPLORER_ID},
         audiences = {Ids.ANDROID_AUDIENCE}
 )
 public class ConferenceApi {
@@ -34,6 +34,7 @@ public class ConferenceApi {
             Conference jugSummerCamp = new Conference();
             jugSummerCamp.setLocation("La Rochelle");
             jugSummerCamp.setName("Jug Summer Camp");
+            jugSummerCamp.setId(1L);
             conferences.add(jugSummerCamp);
         }
         return conferences;
