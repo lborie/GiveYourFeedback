@@ -8,9 +8,6 @@ import java.util.Date;
 @Embed
 public class Comment {
 
-    @Id
-    private Long id;
-
     private Date creationDate;
 
     private String authorNickname;
@@ -18,14 +15,6 @@ public class Comment {
     private String authorEmail;
 
     private String content;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Date getCreationDate() {
         return creationDate;
