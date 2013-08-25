@@ -1,0 +1,5 @@
+<!-- Main component for a primary marketing message or call to action -->
+<div class="jumbotron" ng-repeat="conference in conferences">
+    <h1>{{ conference.name }} à {{ conference.location }}</h1>
+    <p><button class="btn btn-primary" ng-click="displayConference(conference)">Afficher le détail</button></p>
+</div>
