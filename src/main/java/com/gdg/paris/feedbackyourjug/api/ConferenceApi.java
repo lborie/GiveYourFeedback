@@ -2,6 +2,7 @@ package com.gdg.paris.feedbackyourjug.api;
 
 import com.gdg.paris.feedbackyourjug.dao.GenericDao;
 import com.gdg.paris.feedbackyourjug.model.Conference;
+import com.gdg.paris.feedbackyourjug.model.Session;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 
@@ -28,16 +29,7 @@ public class ConferenceApi {
             httpMethod = ApiMethod.HttpMethod.GET
     )
     public List<Conference> getConferences() {
-        List<Conference> conferences = conferenceDao.getEntities();
-        if (conferences == null || conferences.isEmpty()) {
-            conferences = new ArrayList<>();
-            Conference jugSummerCamp = new Conference();
-            jugSummerCamp.setLocation("La Rochelle");
-            jugSummerCamp.setName("Jug Summer Camp");
-            jugSummerCamp.setId(1L);
-            conferences.add(jugSummerCamp);
-        }
-        return conferences;
+        return conferenceDao.getEntities();
     }
 
     @ApiMethod(
@@ -58,6 +50,30 @@ public class ConferenceApi {
     public Conference updateConference(Conference conference){
         conferenceDao.insertEntity(conference);
         return conference;
+    }
+
+    @ApiMethod(
+            name = "conferences.fake",
+            path = "conference/fake",
+            httpMethod = ApiMethod.HttpMethod.GET
+    )
+    public Conference fakeConference(){
+        Conference jugSummerCamp = new Conference();
+        jugSummerCamp.setLocation("La Rochelle");
+        jugSummerCamp.setName("Jug Summer Camp");
+        jugSummerCamp.setId(1L);
+        conferenceDao.insertEntity(jugSummerCamp);
+
+        GenericDao<Session> sessionDao = new GenericDao<>(Session.class);
+        Session session = new Session();
+        session.setId(1L);
+        session.setIdConference(1L);
+        session.setTitle("Keynote");
+        session.setSpeaker("David Gageot");
+        session.setDescription("Keanote d'introduction");
+        sessionDao.insertEntity(session);
+
+        return jugSummerCamp;
     }
 
 }

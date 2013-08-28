@@ -22,7 +22,7 @@ feedbackApp.config(function($routeProvider) {
         })
         .when('/conference/:idConference/:idSession',{
             templateUrl: 'views/session.html',
-            controller: 'conferenceController'
+            controller: 'sessionController'
         })
         .otherwise({
             redirectTo: '/home'

@@ -1,7 +1,9 @@
 package com.gdg.paris.feedbackyourjug.api;
 
 import com.gdg.paris.feedbackyourjug.dao.GenericDao;
+import com.gdg.paris.feedbackyourjug.model.Comment;
 import com.gdg.paris.feedbackyourjug.model.Session;
+import com.gdg.paris.feedbackyourjug.model.dto.CommentDto;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.appengine.api.users.User;
@@ -39,19 +41,7 @@ public class SessionApi {
     public List<Session> getSessions(@Named("idConference") String idConference) {
         Map<String, Object> searchParams = new HashMap<>();
         searchParams.put("idConference", Long.valueOf(idConference));
-        List<Session> sessions = sessionDao.getEntities(searchParams);
-
-        if (sessions == null || sessions.isEmpty()) {
-            sessions = new ArrayList<>();
-            Session session = new Session();
-            session.setId(1L);
-            session.setIdConference(1L);
-            session.setTitle("Keynote");
-            session.setSpeaker("David Gageot");
-            session.setDescription("Keanote d'introduction");
-            sessions.add(session);
-        }
-        return sessions;
+        return sessionDao.getEntities(searchParams);
     }
 
     /**
@@ -65,26 +55,24 @@ public class SessionApi {
             httpMethod = ApiMethod.HttpMethod.GET
     )
     public Session getSession(@Named("id") String id) {
-        Session session = sessionDao.getEntityById(Long.valueOf(id));
-
-        if (session == null) {
-            session = new Session();
-            session.setId(1L);
-            session.setTitle("Keynote");
-            session.setSpeaker("David Gageot");
-            session.setDescription("Keanote d'introduction");
-        }
-        return session;
+        return sessionDao.getEntityById(Long.valueOf(id));
     }
 
     @ApiMethod(
-            name = "sessions.update",
-            path = "session",
-            httpMethod = ApiMethod.HttpMethod.PUT
+            name = "sessions.update.comment",
+            path = "session/comment",
+            httpMethod = ApiMethod.HttpMethod.POST
     )
-    public Session updateSession(Session session, User user) {
-        sessionDao.insertEntity(session);
-        return session;
+    public Session addComment(CommentDto newComment, User user) {
+        Session sessionToUpdate = sessionDao.getEntityById(Long.valueOf(newComment.getSessionId()));
+        if (sessionToUpdate != null){
+            Comment commentaireToAdd = newComment.getComment();
+            commentaireToAdd.setAuthorEmail(user.getEmail());
+            commentaireToAdd.setAuthorNickname(newComment.getNickName());
+            sessionToUpdate.getComments().add(commentaireToAdd);
+            sessionDao.insertEntity(sessionToUpdate);
+        }
+        return sessionToUpdate;
     }
 
 }

@@ -5,7 +5,7 @@
  */
 feedbackApp.service("UserService", function () {
 
-    var currentUser;
+    var currentUser = undefined;
 
     return {
         setUser : function(user) {
@@ -15,7 +15,7 @@ feedbackApp.service("UserService", function () {
             return currentUser;
         },
         isLogged: function() {
-            return currentUser;
+            return currentUser !== undefined;
         }
     };
 });

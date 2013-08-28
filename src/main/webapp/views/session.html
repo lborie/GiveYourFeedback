@@ -1,5 +1,30 @@
 <!-- Main component for a primary marketing message or call to action -->
 <div class="jumbotron">
     <h1>{{ session.title }}</h1>
+
     <p>{{ session.description }}</p>
+</div>
+<div class="jumbotron" ng-repeat="comment in session.comments">
+    <h4>{{ comment.authorNickname }}</h4>
+    <p>{{ comment.description }}</p>
+</div>
+
+<div class="row" ng-if="isLogged">
+    <div class="col-md-4">
+        <form role="form">
+            <!--<div class="form-group">-->
+                <!--<label for="authorNickname">Pseudonyme</label>-->
+                <!--<input type="text" class="form-control" id="authorNickname" ng-model="newComment.authorNickname" placeholder="Toto">-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<label for="authorEmail">Email</label>-->
+                <!--<input type="email" class="form-control" id="authorEmail" ng-model="newComment.email" placeholder="toto@gmail.com">-->
+            <!--</div>-->
+            <div class="form-group">
+                <label for="content">Commentaire</label>
+                <textarea type="textarea" class="form-control" id="content" rows="5" ng-model="newComment.content" placeholder="C'était top !"></textarea>
+            </div>
+            <button type="submit" ng-click="newComment()" class="btn btn-default">Envoyer</button>
+        </form>
+    </div>
 </div>

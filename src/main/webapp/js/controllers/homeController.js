@@ -13,7 +13,7 @@ feedbackApp.controller("homeController" ,function ($scope, $window, UserService)
         if (!$scope.logged) {
             gapi.auth.authorize({
                     client_id: '700903555117.apps.googleusercontent.com',
-                    scope: 'https://www.googleapis.com/auth/userinfo.profile',
+                    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
                     immediate: mode,
                     response_type: 'token id_token'},
                 callback

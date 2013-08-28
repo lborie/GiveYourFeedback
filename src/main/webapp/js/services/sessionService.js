@@ -12,6 +12,9 @@ feedbackApp.service("SessionService", function ($http) {
         },
         getSession : function(id) {
             return $http.get(CURRENT_ROOT + '/session/' + id);
+        },
+        newComment: function(commentDto) {
+            return gapi.client.feedbackyourjug.sessions.update.comment(commentDto);
         }
     };
 });
