@@ -22,19 +22,19 @@ feedbackApp.controller("homeController" ,function ($scope, $window) {
     }
 
     $scope.userAuthed = function() {
-        var request = gapi.client.oauth2.userinfo.get().execute(function(resp) {
+        gapi.client.oauth2.userinfo.get().execute(function(resp) {
             console.log(resp);
             if (!resp.code) {
                 $scope.logged = true;
                 $scope.loginAction = resp.name;
-                $scope.$apply();
                 var token = gapi.auth.getToken();
                 token.access_token = token.id_token;
                 gapi.auth.setToken(token);
-                // User is signed in, call my Endpoint
+                $scope.$apply();
             }
         });
     }
+
     $scope.auth = function() {
         $scope.signin(false, $scope.userAuthed);
     };
@@ -43,10 +43,10 @@ feedbackApp.controller("homeController" ,function ($scope, $window) {
         gapi.client.load('feedbackyourjug', 'v1', function(){
             $scope.backendReady = true;
         }, apiRoot);
-        gapi.client.load('oauth2', 'v2', $scope.signin(true, $scope.userAuthed));
+        gapi.client.load('oauth2', 'v2', function(){console.log("signin ready")});
     }
 
     $window.init= function() {
-        $scope.$apply($scope.initBackend);
+        $scope.initBackend();
     };
 });
