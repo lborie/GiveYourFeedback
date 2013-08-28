@@ -43,11 +43,9 @@
 <script type="text/javascript" src="/js/controllers/conferenceController.js"></script>
 <script type="text/javascript" src="/js/controllers/homeController.js"></script>
 <script type="text/javascript">
+    var apiRoot = '//' + window.location.host + '/_ah/api';
     function init() {
-        var apiRoot = '//' + window.location.host + '/_ah/api';
-        var callback = function() {}
-        gapi.client.load('feedbackyourjug', 'v1', callback, apiRoot);
-        gapi.client.load('oauth2', 'v2', callback);
+        window.init();
     }
 </script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
