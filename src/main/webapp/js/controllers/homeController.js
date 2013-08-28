@@ -3,7 +3,7 @@
 /**
  * Controller of the home page
  */
-feedbackApp.controller("homeController" ,function ($scope, $window) {
+feedbackApp.controller("homeController" ,function ($scope, $window, UserService) {
 
     $scope.project = 'Start Endpoints';
     $scope.loginAction = 'Login';
@@ -25,7 +25,7 @@ feedbackApp.controller("homeController" ,function ($scope, $window) {
         gapi.client.oauth2.userinfo.get().execute(function(resp) {
             console.log(resp);
             if (!resp.code) {
-                $scope.logged = true;
+                UserService.setUser(resp);
                 $scope.loginAction = resp.name;
                 var token = gapi.auth.getToken();
                 token.access_token = token.id_token;
