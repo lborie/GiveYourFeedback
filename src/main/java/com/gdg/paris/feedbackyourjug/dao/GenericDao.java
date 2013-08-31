@@ -27,63 +27,48 @@ public class GenericDao<T> {
         ObjectifyService.register(typeParameterClass);
     }
 
-    public void clearCache() {
-        ofy().clear();
-    }
-
     /**
      * return the entire list of Entity
      */
     public List<T> getEntities() {
-        return ofy().consistency(ReadPolicy.Consistency.STRONG).load().type(this.typeParameterClass).list();
+        return ofy().load().type(this.typeParameterClass).list();
     }
 
     /**
      * return the entire list of Sorted
      */
     public List<T> getEntitiesSortedByLimited(String sortParam, int limit) {
-        return ofy().consistency(ReadPolicy.Consistency.STRONG).load().type(this.typeParameterClass).order(sortParam).limit(limit).list();
+        return ofy().load().type(this.typeParameterClass).order(sortParam).limit(limit).list();
     }
 
     /**
      * return the entire list of Entity
      */
     public List<T> getEntities(Map<String, Object> keyValues) {
-        final LoadType<T> type = ofy().consistency(ReadPolicy.Consistency.STRONG).load().type(this.typeParameterClass);
+        final LoadType<T> type = ofy().load().type(this.typeParameterClass);
 
-        Query<T> currentQuery = null;
+        Query<T> currentQuery = type;
         for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
-            if (currentQuery == null) {
-                currentQuery = type.filter(entry.getKey(), entry.getValue());
-            } else {
-                currentQuery = currentQuery.filter(entry.getKey(), entry.getValue());
-            }
+            currentQuery = currentQuery.filter(entry.getKey(), entry.getValue());
         }
-        if (currentQuery != null) {
-            return currentQuery.list();
-        } else {
-            return type.list();
-        }
+
+        return currentQuery.list();
     }
 
     /**
      * return the entire list of Entity
      */
     public List<T> getEntitiesSortedByLimited(Map<String, Object> keyValues, String sortParam, int limit) {
-        final LoadType<T> type = ofy().consistency(ReadPolicy.Consistency.STRONG).load().type(this.typeParameterClass);
+        final LoadType<T> type = ofy().load().type(this.typeParameterClass);
 
-        Query<T> currentQuery = null;
+        Query<T> currentQuery = type;
         for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
-            if (currentQuery == null) {
-                currentQuery = type.filter(entry.getKey(), entry.getValue());
-            } else {
-                currentQuery = currentQuery.filter(entry.getKey(), entry.getValue());
-            }
+            currentQuery = currentQuery.filter(entry.getKey(), entry.getValue());
         }
         //Sort
-        currentQuery.order(sortParam);
+        currentQuery = currentQuery.order(sortParam);
         //Limit
-        currentQuery.limit(limit);
+        currentQuery = currentQuery.limit(limit);
 
         return currentQuery.list();
     }
@@ -92,7 +77,7 @@ public class GenericDao<T> {
      * return the entity filtered by one criteria
      */
     public T getEntity(String column, String value) {
-        return ofy().consistency(ReadPolicy.Consistency.STRONG).load().type(this.typeParameterClass).filter(column, value).first().now();
+        return ofy().load().type(this.typeParameterClass).filter(column, value).first().now();
     }
 
     /**
@@ -101,13 +86,9 @@ public class GenericDao<T> {
     public T getEntity(Map<String, Object> keyValues) {
         final LoadType<T> type = ofy().consistency(ReadPolicy.Consistency.STRONG).load().type(this.typeParameterClass);
 
-        Query<T> currentQuery = null;
+        Query<T> currentQuery = type;
         for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
-            if (currentQuery == null) {
-                currentQuery = type.filter(entry.getKey(), entry.getValue());
-            } else {
-                currentQuery = currentQuery.filter(entry.getKey(), entry.getValue());
-            }
+            currentQuery = currentQuery.filter(entry.getKey(), entry.getValue());
         }
 
         return currentQuery.first().now();
@@ -117,7 +98,7 @@ public class GenericDao<T> {
      * return the entire list of Entity
      */
     public T getEntityById(long id) {
-        return ofy().consistency(ReadPolicy.Consistency.STRONG).load().type(this.typeParameterClass).id(id).now();
+        return ofy().load().type(this.typeParameterClass).id(id).now();
     }
 
     /**
@@ -128,7 +109,6 @@ public class GenericDao<T> {
      */
     public void insertEntity(T object) {
         ofy().save().entity(object).now();
-        ofy().clear();
     }
 
     /**
@@ -139,7 +119,6 @@ public class GenericDao<T> {
      */
     public void insertEntities(List<T> objects) {
         ofy().save().entities(objects).now();
-        ofy().clear();
     }
 
     /**
