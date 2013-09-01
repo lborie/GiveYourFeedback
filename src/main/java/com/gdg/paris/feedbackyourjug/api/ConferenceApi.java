@@ -6,7 +6,6 @@ import com.gdg.paris.feedbackyourjug.model.Session;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +15,7 @@ import java.util.List;
 @Api(
         name = "feedbackyourjug",
         version = "v1",
-        clientIds = {Ids.WEB_CLIENT_ID, Ids.ANDROID_CLIENT_ID, Ids.IOS_CLIENT_ID, Ids.API_EXPLORER_ID},
-        audiences = {Ids.ANDROID_AUDIENCE}
+        clientIds = {Ids.WEB_CLIENT_ID, Ids.API_EXPLORER_ID}
 )
 public class ConferenceApi {
 
@@ -37,7 +35,7 @@ public class ConferenceApi {
             path = "conference",
             httpMethod = ApiMethod.HttpMethod.POST
     )
-    public Conference insertConference(Conference conference){
+    public Conference insertConference(Conference conference) {
         conferenceDao.insertEntity(conference);
         return conference;
     }
@@ -47,7 +45,7 @@ public class ConferenceApi {
             path = "conference",
             httpMethod = ApiMethod.HttpMethod.PUT
     )
-    public Conference updateConference(Conference conference){
+    public Conference updateConference(Conference conference) {
         conferenceDao.insertEntity(conference);
         return conference;
     }
@@ -57,7 +55,7 @@ public class ConferenceApi {
             path = "conference/fake",
             httpMethod = ApiMethod.HttpMethod.GET
     )
-    public Conference fakeConference(){
+    public Conference fakeConference() {
         Conference jugSummerCamp = new Conference();
         jugSummerCamp.setLocation("La Rochelle");
         jugSummerCamp.setName("Jug Summer Camp");

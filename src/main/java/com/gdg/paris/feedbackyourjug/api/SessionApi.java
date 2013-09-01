@@ -6,10 +6,11 @@ import com.gdg.paris.feedbackyourjug.model.Session;
 import com.gdg.paris.feedbackyourjug.model.dto.CommentDto;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 
 import javax.inject.Named;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,7 @@ import java.util.Map;
 @Api(
         name = "feedbackyourjug",
         version = "v1",
-        clientIds = {Ids.WEB_CLIENT_ID, Ids.ANDROID_CLIENT_ID, Ids.IOS_CLIENT_ID, Ids.API_EXPLORER_ID},
-        audiences = {Ids.ANDROID_AUDIENCE}
+        clientIds = {Ids.WEB_CLIENT_ID, Ids.API_EXPLORER_ID}
 )
 public class SessionApi {
 
@@ -30,6 +30,7 @@ public class SessionApi {
 
     /**
      * Get the list of Sessions for a done conference.
+     *
      * @param idConference the id of the conference
      * @return the list of the Sessions
      */
@@ -46,6 +47,7 @@ public class SessionApi {
 
     /**
      * Get the session with the id
+     *
      * @param id the id of the session
      * @return the session
      */
@@ -63,12 +65,16 @@ public class SessionApi {
             path = "session/comment",
             httpMethod = ApiMethod.HttpMethod.POST
     )
-    public Session addComment(CommentDto newComment, User user) {
+    public Session addComment(User user, CommentDto newComment) throws OAuthRequestException,
+            IOException {
+        if (user == null) {
+            throw new OAuthRequestException("Invalid user.");
+        }
         Session sessionToUpdate = sessionDao.getEntityById(Long.valueOf(newComment.getSessionId()));
-        if (sessionToUpdate != null){
+        if (sessionToUpdate != null) {
             Comment commentaireToAdd = newComment.getComment();
-            commentaireToAdd.setAuthorEmail(user.getEmail());
             commentaireToAdd.setAuthorNickname(newComment.getNickName());
+            commentaireToAdd.setAuthorEmail(user.getEmail());
             sessionToUpdate.getComments().add(commentaireToAdd);
             sessionDao.insertEntity(sessionToUpdate);
         }

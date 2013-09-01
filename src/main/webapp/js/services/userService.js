@@ -15,7 +15,7 @@ feedbackApp.service("UserService", function () {
             return currentUser;
         },
         isLogged: function() {
-            return currentUser !== undefined;
+            return currentUser;
         }
     };
 });

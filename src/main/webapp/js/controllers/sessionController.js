@@ -13,15 +13,21 @@ feedbackApp.controller("sessionController", function ($scope, SessionService, $r
     }
 
     $scope.newComment = function () {
-        $scope.newComment.authorEmail = UserService.getUser().email;
         SessionService.newComment({
-            comment: $scope.newComment,
+            comment: {
+                authorEmail: UserService.getUser().email,
+                content: $scope.newComment.content,
+                authorNickname: UserService.getUser().name
+            },
             sessionId: $routeParams.idSession,
             nickName: UserService.getUser().name
         }).execute(function (resp) {
-                $scope.session = resp;
+                $scope.session = resp.result;
+                $scope.$apply();
             });
-    }
+    };
 
-    $scope.isLogged = UserService.isLogged();
+    $scope.isLogged = function() {
+        return UserService.isLogged();
+    };
 });
