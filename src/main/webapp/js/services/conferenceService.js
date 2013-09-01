@@ -10,8 +10,8 @@ feedbackApp.service("ConferenceService", function ($http) {
         fetch : function() {
             return $http.get(CURRENT_ROOT);
         },
-        save: function(conference) {
-            return $http.post(CURRENT_ROOT, conference);
+        insertConference: function(conference) {
+            return gapi.client.feedbackyourjug.conferences.insert(conference);
         }
     };
 });

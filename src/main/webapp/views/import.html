@@ -1,0 +1,28 @@
+<!-- Main component for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <h1>Créez votre conférence !</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form role="form" class="ng-invalid ng-invalid-required" name="createForm">
+                <div class="form-group">
+                    <label for="conferenceName">Nom de la conférence</label>
+                    <input type="text" ng-model="conference.name" class="form-control" id="conferenceName" placeholder="Jug Summer Camp">
+                </div>
+                <div class="form-group">
+                    <label for="conferenceLocation">Ville</label>
+                    <input type="text" ng-model="conference.location" class="form-control" id="conferenceLocation" placeholder="La Rochelle">
+                </div>
+                <div class="form-group">
+                    <label for="conferenceSiteWeb">Site Web</label>
+                    <input type="text" ng-model="conference.siteWeb" class="form-control" id="conferenceSiteWeb" placeholder="http://">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default" ng-click="createPicker()">Choisir le programme</button>
+                    <img ng-src="{{ spreadsheetIcon }}" src="" ng-show="spreadsheetIcon"/> {{spreadsheetName }}
+                </div>
+                <button class="btn btn-primary" ng-click="import()">Importer</button>
+            </form>
+        </div>
+    </div>
+</div>

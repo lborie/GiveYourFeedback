@@ -24,6 +24,10 @@ feedbackApp.config(function($routeProvider) {
             templateUrl: 'views/session.html',
             controller: 'sessionController'
         })
+        .when('/import', {
+            templateUrl: 'views/import.html',
+            controller : 'importController'
+        })
         .otherwise({
             redirectTo: '/home'
         });

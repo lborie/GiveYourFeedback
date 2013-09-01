@@ -11,6 +11,7 @@ import com.google.appengine.api.users.User;
 
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,7 @@ public class SessionApi {
             Comment commentaireToAdd = newComment.getComment();
             commentaireToAdd.setAuthorNickname(newComment.getNickName());
             commentaireToAdd.setAuthorEmail(user.getEmail());
+            commentaireToAdd.setCreationDate(new Date());
             sessionToUpdate.getComments().add(commentaireToAdd);
             sessionDao.insertEntity(sessionToUpdate);
         }

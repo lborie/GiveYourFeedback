@@ -9,7 +9,7 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
         if (!$scope.logged) {
             gapi.auth.authorize({
                     client_id: '700903555117-17gcl1qf309d5meq269ffusooto7o03g.apps.googleusercontent.com',
-                    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+                    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file',
                     immediate: mode,
                     response_type: 'token id_token'},
                 callback
@@ -42,6 +42,7 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
         gapi.client.load('feedbackyourjug', 'v1', function(){
             $scope.backendReady = true;
         }, apiRoot);
+
         gapi.client.load('oauth2', 'v2', function(){
             console.log("signin ready")
             $scope.signin(true, $scope.userAuthed);

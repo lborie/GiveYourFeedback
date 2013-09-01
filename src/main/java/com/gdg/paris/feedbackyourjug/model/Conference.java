@@ -16,6 +16,12 @@ public class Conference {
 
     private String location;
 
+    private String siteWeb;
+
+    private String spreadSheetId;
+
+    private String spreadSheetUrl;
+
     public Long getId() {
         return id;
     }
@@ -38,5 +44,29 @@ public class Conference {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getSpreadSheetId() {
+        return spreadSheetId;
+    }
+
+    public void setSpreadSheetId(String spreadSheetId) {
+        this.spreadSheetId = spreadSheetId;
+    }
+
+    public String getSiteWeb() {
+        return siteWeb;
+    }
+
+    public void setSiteWeb(String siteWeb) {
+        this.siteWeb = siteWeb;
+    }
+
+    public String getSpreadSheetUrl() {
+        return spreadSheetUrl;
+    }
+
+    public void setSpreadSheetUrl(String spreadSheetUrl) {
+        this.spreadSheetUrl = spreadSheetUrl;
     }
 }

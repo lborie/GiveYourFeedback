@@ -5,7 +5,10 @@ import com.gdg.paris.feedbackyourjug.model.Conference;
 import com.gdg.paris.feedbackyourjug.model.Session;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.appengine.api.oauth.OAuthRequestException;
+import com.google.appengine.api.users.User;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -35,8 +38,11 @@ public class ConferenceApi {
             path = "conference",
             httpMethod = ApiMethod.HttpMethod.POST
     )
-    public Conference insertConference(Conference conference) {
-        conferenceDao.insertEntity(conference);
+    public Conference insertConference(Conference conference, User user) throws OAuthRequestException,
+            IOException {
+        if (user == null) {
+            throw new OAuthRequestException("Invalid user.");
+        }
         return conference;
     }
 
