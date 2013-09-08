@@ -18,6 +18,8 @@ public class Conference {
 
     private String siteWeb;
 
+    private String userToken;
+
     private String spreadSheetId;
 
     private String spreadSheetUrl;
@@ -68,5 +70,13 @@ public class Conference {
 
     public void setSpreadSheetUrl(String spreadSheetUrl) {
         this.spreadSheetUrl = spreadSheetUrl;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
     }
 }

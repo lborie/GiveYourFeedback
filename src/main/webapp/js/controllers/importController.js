@@ -3,7 +3,7 @@
 /**
  * Controller of the conference page
  */
-feedbackApp.controller("importController", function ($scope, ConferenceService, UserService) {
+feedbackApp.controller("importController", function ($scope, $http, ConferenceService, UserService) {
     gapi.load('picker', {'callback': $scope.createPicker});
 
     $scope.conference = {};
@@ -34,9 +34,14 @@ feedbackApp.controller("importController", function ($scope, ConferenceService, 
             var chosenDoc = data.docs[0];
             $scope.conference.spreadSheetId = chosenDoc.id;
             $scope.conference.spreadSheetUrl = chosenDoc.url;
+            $scope.conference.userToken = UserService.getToken().originalAccessToken;
+//            $scope.conference.userToken = UserService.getToken().access_token;
             $scope.spreadsheetIcon = chosenDoc.iconUrl;
             $scope.spreadsheetName = chosenDoc.name;
             $scope.$apply();
+
+            console.log('https://spreadsheets.google.com/feeds/spreadsheets/'+ chosenDoc.id + '?access_token=' + $scope.conference.userToken);
+
         }
     }
 

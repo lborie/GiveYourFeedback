@@ -7,8 +7,12 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
+import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.spreadsheet.*;
+import com.google.gdata.util.ServiceException;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -39,10 +43,25 @@ public class ConferenceApi {
             httpMethod = ApiMethod.HttpMethod.POST
     )
     public Conference insertConference(Conference conference, User user) throws OAuthRequestException,
-            IOException {
+            IOException, ServiceException {
         if (user == null) {
             throw new OAuthRequestException("Invalid user.");
         }
+
+        SpreadsheetService service = new SpreadsheetService("give-your-feedback");
+        service.setAuthSubToken(conference.getUserToken());
+        service.useSsl();
+
+        SpreadsheetEntry entry = service.getEntry(new URL("https://spreadsheets.google.com/feeds/spreadsheets/" + conference.getSpreadSheetId()), SpreadsheetEntry.class);
+        WorksheetEntry wsEntry = entry.getDefaultWorksheet();
+
+        ListFeed listFeed = service.getFeed(wsEntry.getListFeedUrl(), ListFeed.class);
+        for (ListEntry row : listFeed.getEntries()) {
+            for (String tag : row.getCustomElements().getTags()) {
+                System.out.print(tag + " : " + row.getCustomElements().getValue(tag) + "\t");
+            }
+        }
+
         return conference;
     }
 
