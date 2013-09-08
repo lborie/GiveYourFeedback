@@ -28,7 +28,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="hidden-sm hidden-xs">
-                    <img ng-src="{{profilePictureUrl}}" ng-show="isLogged()" class="img-thumbnail img-responsive profile-image">
+                    <img ng-src="{{profilePictureUrl}}" ng-show="isLogged() && profilePictureUrl" class="img-thumbnail img-responsive profile-image">
                 </li>
                 <li ng-class="{'hidden-sm hidden-xs': isLogged()}">
                     <a ng-href="{{profileUrl}}" ng-click='auth()'>{{loginAction}}</a>
