@@ -13,6 +13,7 @@ import com.google.gdata.util.ServiceException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +28,7 @@ import java.util.List;
 public class ConferenceApi {
 
     private final GenericDao<Conference> conferenceDao = new GenericDao<>(Conference.class);
+    private final GenericDao<Session> sessionDao = new GenericDao<>(Session.class);
 
     @ApiMethod(
             name = "conferences.list",
@@ -52,15 +54,50 @@ public class ConferenceApi {
         service.setAuthSubToken(conference.getUserToken());
         service.useSsl();
 
-        SpreadsheetEntry entry = service.getEntry(new URL("https://spreadsheets.google.com/feeds/spreadsheets/" + conference.getSpreadSheetId()), SpreadsheetEntry.class);
+        URL spreadsheetUrl = new URL("https://spreadsheets.google.com/feeds/spreadsheets/" + conference.getSpreadSheetId());
+        SpreadsheetEntry entry = service.getEntry(spreadsheetUrl, SpreadsheetEntry.class);
         WorksheetEntry wsEntry = entry.getDefaultWorksheet();
+
+        conferenceDao.insertEntity(conference);
+
+        List<Session> sessions = new ArrayList<>();
 
         ListFeed listFeed = service.getFeed(wsEntry.getListFeedUrl(), ListFeed.class);
         for (ListEntry row : listFeed.getEntries()) {
+            Session session = new Session();
+            session.setIdConference(conference.getId());
+            sessions.add(session);
             for (String tag : row.getCustomElements().getTags()) {
+                switch (tag){
+                    case "titre":
+                        session.setTitle(row.getCustomElements().getValue(tag));
+                        break;
+                    case "speakers":
+                        session.setSpeaker(row.getCustomElements().getValue(tag));
+                        break;
+                    case "type":
+                        session.setType(row.getCustomElements().getValue(tag));
+                        break;
+                    case "salle":
+                        session.setLocation(row.getCustomElements().getValue(tag));
+                        break;
+                    case "début":
+                        session.setStartTime(row.getCustomElements().getValue(tag));
+                        break;
+                    case "fin":
+                        session.setEndTime(row.getCustomElements().getValue(tag));
+                        break;
+                    case "date":
+                        session.setDay(row.getCustomElements().getValue(tag));
+                        break;
+                    case "description":
+                        session.setDescription(row.getCustomElements().getValue(tag));
+                        break;
+                }
                 System.out.print(tag + " : " + row.getCustomElements().getValue(tag) + "\t");
             }
         }
+        sessionDao.insertEntities(sessions);
 
         return conference;
     }

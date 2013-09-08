@@ -24,8 +24,10 @@ public class Session {
     private String title;
     private String description;
     private String location;
-    private Date startDate;
-    private Date endDate;
+    private String day;
+    private String startTime;
+    private String endTime;
+    private String type;
 
     public Long getId() {
         return id;
@@ -84,19 +86,35 @@ public class Session {
         this.location = location;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
