@@ -4,6 +4,9 @@
  * Controller of the home page
  */
 feedbackApp.controller("mainController" ,function ($scope, $window, UserService) {
+    $scope.profileUrl = "#";
+    $scope.loginAction = 'Login';
+    $scope.profileClass="";
 
     $scope.signin = function(mode, callback) {
         if (!$scope.logged) {
@@ -28,8 +31,11 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
                 token.access_token = token.id_token;
                 UserService.setToken(token);
                 gapi.auth.setToken(token);
+                $scope.profileUrl = resp.link;
+                $scope.profilePictureUrl = resp.picture;
             } else {
                 $scope.loginAction = 'Login';
+                $scope.profileUrl = "#";
                 $scope.logged = false;
             }
             $scope.$apply();
@@ -37,7 +43,9 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
     }
 
     $scope.auth = function() {
-        $scope.signin(false, $scope.userAuthed);
+        if (!UserService.isLogged()){
+            $scope.signin(false, $scope.userAuthed);
+        }
     };
 
     $scope.initBackend = function() {
@@ -53,6 +61,10 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
 
     $window.init= function() {
         $scope.initBackend();
+    };
+
+    $scope.isLogged = function() {
+        return UserService.isLogged();
     };
 });
 

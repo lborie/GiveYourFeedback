@@ -4,3 +4,6 @@ body {
 .navbar-static-top {
     margin-bottom: 19px;
 }
+.profile-image{
+    max-height: 50px;
+}

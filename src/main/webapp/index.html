@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Give your feedback !</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
 
@@ -22,11 +23,21 @@
             <ul class="nav navbar-nav">
                 <li><a href="#/conference">Conférences</a></li>
             </ul>
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" ng-show="isLogged()">
                 <li><a href="#/import">Importer ma conférence</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" ng-click='auth()'>{{loginAction}}</a></li>
+                <li class="hidden-sm hidden-xs">
+                    <img ng-src="{{profilePictureUrl}}" ng-show="isLogged()" class="img-thumbnail img-responsive profile-image">
+                </li>
+                <li ng-class="{'hidden-sm hidden-xs': isLogged()}">
+                    <a ng-href="{{profileUrl}}" ng-click='auth()'>{{loginAction}}</a>
+                </li>
+                <!--
+                <li>
+                    <a ng-href="#" ng-show="isLogged()" ng-click='signOut()'>sign out</a>
+                </li>
+                -->
             </ul>
         </div>
         <!--/.nav-collapse -->
