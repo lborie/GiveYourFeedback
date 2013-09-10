@@ -111,29 +111,4 @@ public class ConferenceApi {
         conferenceDao.insertEntity(conference);
         return conference;
     }
-
-    @ApiMethod(
-            name = "conferences.fake",
-            path = "conference/fake",
-            httpMethod = ApiMethod.HttpMethod.GET
-    )
-    public Conference fakeConference() {
-        Conference jugSummerCamp = new Conference();
-        jugSummerCamp.setLocation("La Rochelle");
-        jugSummerCamp.setName("Jug Summer Camp");
-        jugSummerCamp.setId(1L);
-        conferenceDao.insertEntity(jugSummerCamp);
-
-        GenericDao<Session> sessionDao = new GenericDao<>(Session.class);
-        Session session = new Session();
-        session.setId(1L);
-        session.setIdConference(1L);
-        session.setTitle("Keynote");
-        session.setSpeaker("David Gageot");
-        session.setDescription("Keanote d'introduction");
-        sessionDao.insertEntity(session);
-
-        return jugSummerCamp;
-    }
-
 }
