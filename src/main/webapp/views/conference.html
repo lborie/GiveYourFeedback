@@ -1,5 +1,19 @@
 <!-- Main component for a primary marketing message or call to action -->
-<div class="jumbotron" ng-repeat="session in sessions">
-    <h1>{{ session.title }}</h1>
-    <p><a class="btn btn-primary" ng-href="#/conference/{{ session.sessionUrl }}">Afficher le détail</a></p>
-</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th ng-repeat="location in locations">{{location}}</th>
+        </tr>
+    </thead>
+    <tbody ng-repeat="(slot, sessionLocation) in sessions">
+        <tr>
+            <td>{{slot}}</td>
+            <td ng-repeat="(location, session) in sessionLocation">
+                <a class="btn btn-primary" ng-href="#/conference/{{ session.sessionUrl }}">
+                    {{ session.title }}
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

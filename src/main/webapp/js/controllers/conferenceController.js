@@ -10,11 +10,25 @@ feedbackApp.controller("conferenceController", function ($scope, $routeParams, $
     if ($routeParams.idConference) {
         SessionService.getSessions($routeParams.idConference)
             .success(function (resp) {
-                $scope.sessions = [];
+                $scope.sessions = {};
+                $scope.locations = [];
+                $scope.slots = [];
                 for (var i = 0; i < resp.items.length; i++) {
                     var currentSession = resp.items[i];
                     currentSession.sessionUrl = currentSession.idConference.toString() + '/' + currentSession.id.toString();
-                    $scope.sessions.push(currentSession);
+                    if (!$scope.sessions[currentSession.startTime]){
+                        $scope.sessions[currentSession.startTime] = {} ;
+                    }
+                    if (!$scope.sessions[currentSession.startTime][currentSession.location]){
+                        $scope.sessions[currentSession.startTime][currentSession.location] = {};
+                    }
+                    $scope.sessions[currentSession.startTime][currentSession.location] = currentSession;
+                    if ($scope.locations.indexOf(currentSession.location) == -1){
+                        $scope.locations.push(currentSession.location);
+                    }
+                    if ($scope.slots.indexOf(currentSession.startTime) == -1){
+                        $scope.slots.push(currentSession.startTime);
+                    }
                 }
             })
     } else {
