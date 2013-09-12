@@ -2,6 +2,8 @@
 
 var feedbackApp = angular.module('feedbackApp', []);
 var ROOT_API = '/_ah/api/feedbackyourjug/v1';
+var API_VERSION = 'v1beta2';
+var BUCKET = 'conf-picture';
 
 /**
  * Router

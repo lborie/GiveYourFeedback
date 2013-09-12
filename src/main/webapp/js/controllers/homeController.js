@@ -12,7 +12,7 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
         if (!$scope.logged) {
             gapi.auth.authorize({
                     client_id: '700903555117-17gcl1qf309d5meq269ffusooto7o03g.apps.googleusercontent.com',
-                    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://spreadsheets.google.com/feeds https://docs.google.com/feeds',
+                    scope: 'https://www.googleapis.com/auth/devstorage.full_control https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://spreadsheets.google.com/feeds https://docs.google.com/feeds',
                     immediate: mode,
                     response_type: 'token id_token'},
                 callback
@@ -28,11 +28,16 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
                 $scope.loginAction = resp.name;
                 var token = gapi.auth.getToken();
                 token.originalAccessToken = token.access_token;
-                token.access_token = token.id_token;
+                //token.access_token = token.id_token;
                 UserService.setToken(token);
                 gapi.auth.setToken(token);
                 $scope.profileUrl = resp.link;
                 $scope.profilePictureUrl = resp.picture;
+
+                // Cloud Storage
+                gapi.client.setApiKey('AIzaSyCbEGwzJkS_ybo9whM_GcAYTsm1RH2DD9U');
+                gapi.client.load('storage', API_VERSION);
+
             } else {
                 $scope.loginAction = 'Login';
                 $scope.profileUrl = "#";
@@ -49,6 +54,8 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
     };
 
     $scope.initBackend = function() {
+        gapi.client.setApiKey('AIzaSyCbEGwzJkS_ybo9whM_GcAYTsm1RH2DD9U');
+
         gapi.client.load('feedbackyourjug', 'v1', function(){
             $scope.backendReady = true;
         }, apiRoot);

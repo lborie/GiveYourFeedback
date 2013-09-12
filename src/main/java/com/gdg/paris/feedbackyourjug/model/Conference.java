@@ -24,6 +24,10 @@ public class Conference {
 
     private String spreadSheetUrl;
 
+    private String baniereUrl;
+
+    private boolean isValidated = false;
+
     public Long getId() {
         return id;
     }
@@ -78,5 +82,21 @@ public class Conference {
 
     public void setUserToken(String userToken) {
         this.userToken = userToken;
+    }
+
+    public String getBaniereUrl() {
+        return baniereUrl;
+    }
+
+    public void setBaniereUrl(String baniereUrl) {
+        this.baniereUrl = baniereUrl;
+    }
+
+    public boolean isValidated() {
+        return isValidated;
+    }
+
+    public void setValidated(boolean validated) {
+        isValidated = validated;
     }
 }

@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 
 /**
  * Controller of the conference page
@@ -7,6 +7,75 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
     gapi.load('picker', {'callback': $scope.createPicker});
 
     $scope.conference = {};
+
+    // Init file picker
+    $("#conferenceIllustration").bind("change",function(event){
+        try{
+            var fileData = event.target.files[0];
+        }
+        catch(e) {
+            //'Insert Object' selected from the API Commands select list
+            //Display insert object button and then exit function
+            conferenceIllustration.style.display = 'block';
+            return;
+        }
+        const boundary = '-------314159265358979323846';
+        const delimiter = "\r\n--" + boundary + "\r\n";
+        const close_delim = "\r\n--" + boundary + "--";
+
+        var reader = new FileReader();
+        reader.readAsBinaryString(fileData);
+        reader.onload = function(e) {
+            var contentType = fileData.type || 'application/octet-stream';
+            var metadata = {
+                'name': fileData.name,
+                'mimeType': contentType,
+                'acl': [{
+                    "kind": "storage#objectAccessControl",
+                    "entity": 'allUsers',
+                    "role": 'READER'
+                }]
+            };
+
+            var base64Data = btoa(reader.result);
+            var multipartRequestBody =
+                delimiter +
+                    'Content-Type: application/json;x-goog-acl: public-read\r\n\r\n' +
+                    JSON.stringify(metadata) +
+                    delimiter +
+                    'Content-Type: ' + contentType + '\r\n' +
+                    'Content-Transfer-Encoding: base64\r\n' +
+                    '\r\n' +
+                    base64Data +
+                    close_delim;
+
+            //Note: gapi.client.storage.objects.insert() can only insert
+            //small objects (under 64k) so to support larger file sizes
+            //we're using the generic HTTP request method gapi.client.request()
+            //gapi.auth.setToken(UserService.getToken().originalAccessToken);
+            var request = gapi.client.request({
+                'path': '/upload/storage/'+API_VERSION+'/b/' + BUCKET + '/o',
+                'method': 'POST',
+                'params': {'uploadType': 'multipart'},
+                'headers': {
+                    'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
+                },
+                'body': multipartRequestBody});
+            //Remove the current API result entry in the main-content div
+
+            try{
+                //Execute the insert object request
+                request.execute(function(resp) {
+                    console.log(resp);
+                    $scope.conference.baniereUrl = resp.mediaLink;
+                    $scope.$apply();
+                });
+            }
+            catch(e) {
+                alert('An error has occurred: ' + e.message);
+            }
+        }
+    });
 
     // Create and render a Picker object for searching images.
     $scope.createPicker = function() {
