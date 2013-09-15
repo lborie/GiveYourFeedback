@@ -1,72 +1,9 @@
 <!DOCTYPE html>
-<html ng-app="feedbackApp">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Give your feedback !</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/app.css">
+    <title></title>
 </head>
 <body>
-
-<!-- Static navbar -->
-<div class="navbar navbar-default navbar-static-top" ng-controller="mainController">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#/home">Give your Feedback !</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="#/conference">Conférences</a></li>
-            </ul>
-            <ul class="nav navbar-nav" ng-show="isLogged()">
-                <li><a href="#/import">Organiser ma conférence</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="hidden-sm hidden-xs">
-                    <img ng-src="{{profilePictureUrl}}" ng-show="isLogged() && profilePictureUrl" class="img-thumbnail img-responsive profile-image">
-                </li>
-                <li ng-class="{'hidden-sm hidden-xs': isLogged()}">
-                    <a ng-href="{{profileUrl}}" ng-click='auth()'>{{loginAction}}</a>
-                </li>
-                <!--
-                <li>
-                    <a ng-href="#" ng-show="isLogged()" ng-click='signOut()'>sign out</a>
-                </li>
-                -->
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
-</div>
-
-
-<div class="container" ng-view>
-</div>
-<!-- /container -->
-<script src="//code.jquery.com/jquery.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-<script type="text/javascript" src="/js/app.js"></script>
-<script type="text/javascript" src="/js/services/conferenceService.js"></script>
-<script type="text/javascript" src="/js/services/sessionService.js"></script>
-<script type="text/javascript" src="/js/services/userService.js"></script>
-<script type="text/javascript" src="/js/controllers/importController.js"></script>
-<script type="text/javascript" src="/js/controllers/sessionController.js"></script>
-<script type="text/javascript" src="/js/controllers/conferenceController.js"></script>
-<script type="text/javascript" src="/js/controllers/homeController.js"></script>
-<script type="text/javascript">
-    var apiRoot = '//' + window.location.host + '/_ah/api';
-    function init() {
-        window.init();
-    }
-</script>
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
-</div>
+        Bonjour le Jug Summer Camp !
 </body>
 </html>
