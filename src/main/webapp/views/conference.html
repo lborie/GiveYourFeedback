@@ -6,13 +6,13 @@
             <th ng-repeat="location in locations">{{location}}</th>
         </tr>
     </thead>
-    <tbody ng-repeat="(slot, sessionLocation) in sessions">
-        <tr>
+    <tbody >
+        <tr ng-repeat="(slot, sessionLocation) in sessions">
             <td>{{slot}}</td>
             <td ng-repeat="(location, session) in sessionLocation">
-                <a class="btn btn-primary" ng-href="#/conference/{{ session.sessionUrl }}">
+                <span class="label label-primary" ng-href="#/conference/{{ session.sessionUrl }}">
                     {{ session.title }}
-                </a>
+                </span>
             </td>
         </tr>
     </tbody>
