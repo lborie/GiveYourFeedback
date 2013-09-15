@@ -4,6 +4,7 @@ package com.gdg.paris.feedbackyourjug.model;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Cache
 @Entity
@@ -11,6 +12,9 @@ public class Conference {
 
     @Id
     private Long id;
+
+    @Index
+    private String ownerUserEmail;
 
     private String name;
 
@@ -26,7 +30,7 @@ public class Conference {
 
     private String baniereUrl;
 
-    private boolean isValidated = false;
+    private Boolean isValidated;
 
     public Long getId() {
         return id;
@@ -92,11 +96,19 @@ public class Conference {
         this.baniereUrl = baniereUrl;
     }
 
-    public boolean isValidated() {
+    public Boolean isValidated() {
         return isValidated;
     }
 
     public void setValidated(boolean validated) {
         isValidated = validated;
+    }
+
+    public String getOwnerUserEmail() {
+        return ownerUserEmail;
+    }
+
+    public void setOwnerUserEmail(String ownerUserEmail) {
+        this.ownerUserEmail = ownerUserEmail;
     }
 }

@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Api(
         name = "feedbackyourjug",
-        version = "v1",
+        version = "v2",
         clientIds = {Ids.WEB_CLIENT_ID, Ids.API_EXPLORER_ID}
 )
 public class SessionApi {
@@ -66,7 +66,7 @@ public class SessionApi {
             path = "session/comment",
             httpMethod = ApiMethod.HttpMethod.POST
     )
-    public Session addComment(User user, CommentDto newComment) throws OAuthRequestException,
+    public Session newComment(User user, CommentDto newComment) throws OAuthRequestException,
             IOException {
         if (user == null) {
             throw new OAuthRequestException("Invalid user.");

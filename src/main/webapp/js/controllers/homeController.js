@@ -28,7 +28,7 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
                 $scope.loginAction = resp.name;
                 var token = gapi.auth.getToken();
                 token.originalAccessToken = token.access_token;
-                //token.access_token = token.id_token;
+                token.access_token = token.id_token;
                 UserService.setToken(token);
                 gapi.auth.setToken(token);
                 $scope.profileUrl = resp.link;
@@ -56,7 +56,7 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
     $scope.initBackend = function() {
         gapi.client.setApiKey('AIzaSyCbEGwzJkS_ybo9whM_GcAYTsm1RH2DD9U');
 
-        gapi.client.load('feedbackyourjug', 'v1', function(){
+        gapi.client.load('feedbackyourjug', 'v2', function(){
             $scope.backendReady = true;
         }, apiRoot);
 
