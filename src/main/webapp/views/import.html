@@ -3,6 +3,14 @@
     <h1>Créez votre conférence !</h1>
 
     <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success hide" id="importSuccess">Votre import s'est terminé avec succès ! Il est en cours de validation par un administrateur.</div>
+            <div class="alert alert-info hide" id="importEnCours">Import de votre conférence en cours</div>
+            <div class="alert alert-danger hide" id="importFail">Echec dans l'import de votre conférence</div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <form role="form" class="ng-invalid ng-invalid-required" name="createForm">
                 <div class="form-group">

@@ -8,7 +8,7 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
 
     $scope.conference = {};
 
-    // Init file picker
+    // Init file picker for Illustration
     $("#conferenceIllustration").bind("change",function(event){
         try{
             var fileData = event.target.files[0];
@@ -28,7 +28,7 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
         reader.onload = function(e) {
             var contentType = fileData.type || 'application/octet-stream';
             var metadata = {
-                'name': fileData.name,
+                'name': fileData.name + new Date().getTime().toString(),
                 'mimeType': contentType,
                 'acl': [{
                     "kind": "storage#objectAccessControl",
@@ -52,7 +52,10 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
             //Note: gapi.client.storage.objects.insert() can only insert
             //small objects (under 64k) so to support larger file sizes
             //we're using the generic HTTP request method gapi.client.request()
-            //gapi.auth.setToken(UserService.getToken().originalAccessToken);
+            // HACK
+            var newToken = UserService.getToken();
+            newToken.access_token = newToken.originalAccessToken;
+            gapi.auth.setToken(newToken);
             var request = gapi.client.request({
                 'path': '/upload/storage/'+API_VERSION+'/b/' + BUCKET + '/o',
                 'method': 'POST',
@@ -68,6 +71,11 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
                 request.execute(function(resp) {
                     console.log(resp);
                     $scope.conference.baniereUrl = resp.mediaLink;
+                    var token = gapi.auth.getToken();
+                    token.originalAccessToken = token.access_token;
+                    token.access_token = token.id_token;
+                    UserService.setToken(token);
+                    gapi.auth.setToken(token);
                     $scope.$apply();
                 });
             }
@@ -115,7 +123,17 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
     }
 
     $scope.import = function() {
+        $("#importEnCours").removeClass("hide");
+        $("#importSuccess").addClass("hide");
+        $("#importFail").addClass("hide");
+
         ConferenceService.insertConference($scope.conference).execute(function(resp){
+            $("#importEnCours").addClass("hide");
+            if (resp.code) {
+                $("#importFail").removeClass("hide");
+            } else {
+                $("#importSuccess").removeClass("hide");
+            }
             console.log(resp);
         })
     }
