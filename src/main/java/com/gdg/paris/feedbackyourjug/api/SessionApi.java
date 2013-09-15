@@ -68,14 +68,13 @@ public class SessionApi {
     )
     public Session newComment(User user, CommentDto newComment) throws OAuthRequestException,
             IOException {
-        if (user == null) {
-            throw new OAuthRequestException("Invalid user.");
-        }
         Session sessionToUpdate = sessionDao.getEntityById(Long.valueOf(newComment.getSessionId()));
         if (sessionToUpdate != null) {
             Comment commentaireToAdd = newComment.getComment();
             commentaireToAdd.setAuthorNickname(newComment.getNickName());
-            commentaireToAdd.setAuthorEmail(user.getEmail());
+            if (user != null) {
+                commentaireToAdd.setAuthorEmail(user.getEmail());
+            }
             commentaireToAdd.setCreationDate(new Date());
             sessionToUpdate.getComments().add(commentaireToAdd);
             sessionDao.insertEntity(sessionToUpdate);
