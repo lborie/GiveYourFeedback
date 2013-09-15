@@ -44,10 +44,6 @@ import java.util.logging.Logger;
 public class ConferenceApi {
 
     private final GenericDao<Conference> conferenceDao = new GenericDao<>(Conference.class);
-    private final GenericDao<Session> sessionDao = new GenericDao<>(Session.class);
-    private final static Logger logger = Logger.getLogger(ConferenceApi.class.getName());
-
-    private final static String ADMINISRATOR = "no-reply@give-your-feedback.appspotmail.com";
 
     @ApiMethod(
             name = "conferences.list",
@@ -55,15 +51,7 @@ public class ConferenceApi {
             httpMethod = ApiMethod.HttpMethod.GET
     )
     public List<Conference> getConferences() {
-        List<Conference> allConferences = conferenceDao.getEntities();
-        Predicate<Conference> validatedConference = new Predicate<Conference>() {
-            @Override
-            public boolean apply(@Nullable Conference conference) {
-                return Boolean.TRUE.equals(conference.isValidated());
-            }
-        };
-        return Lists.newArrayList(Iterables.filter(allConferences, validatedConference));
-//        return conferenceDao.getEntities();
+        return conferenceDao.getEntities();
     }
 
     @ApiMethod(
@@ -71,89 +59,10 @@ public class ConferenceApi {
             path = "conference",
             httpMethod = ApiMethod.HttpMethod.POST
     )
-    public Conference insertConference(Conference conference, User user) throws OAuthRequestException,
+    public Conference insertConference(Conference conference) throws OAuthRequestException,
             IOException, ServiceException, MessagingException {
-        if (user == null) {
-            throw new OAuthRequestException("Invalid user.");
-        }
-
-        // Owner
-        conference.setOwnerUserEmail(user.getEmail());
-        conference.setValidated(false);
         conferenceDao.insertEntity(conference);
-
-        // Sessions
-        SpreadsheetService service = new SpreadsheetService("give-your-feedback");
-        service.setAuthSubToken(conference.getUserToken());
-        service.useSsl();
-
-        URL spreadsheetUrl = new URL("https://spreadsheets.google.com/feeds/spreadsheets/" + conference.getSpreadSheetId());
-        SpreadsheetEntry entry = service.getEntry(spreadsheetUrl, SpreadsheetEntry.class);
-        WorksheetEntry wsEntry = entry.getDefaultWorksheet();
-
-        List<Session> sessions = new ArrayList<>();
-
-        ListFeed listFeed = service.getFeed(wsEntry.getListFeedUrl(), ListFeed.class);
-        for (ListEntry row : listFeed.getEntries()) {
-            Session session = new Session();
-            session.setIdConference(conference.getId());
-            sessions.add(session);
-            for (String tag : row.getCustomElements().getTags()) {
-                switch (tag) {
-                    case "titre":
-                        session.setTitle(row.getCustomElements().getValue(tag));
-                        break;
-                    case "speakers":
-                        session.setSpeaker(row.getCustomElements().getValue(tag));
-                        break;
-                    case "type":
-                        session.setType(row.getCustomElements().getValue(tag));
-                        break;
-                    case "salle":
-                        session.setLocation(row.getCustomElements().getValue(tag));
-                        break;
-                    case "début":
-                        session.setStartTime(row.getCustomElements().getValue(tag));
-                        break;
-                    case "fin":
-                        session.setEndTime(row.getCustomElements().getValue(tag));
-                        break;
-                    case "date":
-                        session.setDay(row.getCustomElements().getValue(tag));
-                        break;
-                    case "description":
-                        session.setDescription(row.getCustomElements().getValue(tag));
-                        break;
-                }
-                System.out.print(tag + " : " + row.getCustomElements().getValue(tag) + "\t");
-            }
-        }
-        sessionDao.insertEntities(sessions);
-
-        sendMail(conference);
-
         return conference;
     }
 
-    private void sendMail(Conference conference) throws UnsupportedEncodingException, MessagingException {
-        Properties props = new Properties();
-        javax.mail.Session session = javax.mail.Session.getDefaultInstance(props, null);
-
-        try {
-            String encodingOptions = "text/html; charset=UTF-8";
-            MimeMessage msg = new MimeMessage(session);
-            msg.setHeader("Content-Type", encodingOptions);
-            msg.setFrom(new javax.mail.internet.InternetAddress(ADMINISRATOR, "Give Your Feedback"));
-            msg.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress("admins"));
-            msg.setSubject("Nouvelle conférence créée !", "UTF-8");
-            msg.setText("Une nouvelle conférence vient d'être créée (" + conference.getName() + "), et est en attente de votre validation.");
-
-            Transport.send(msg);
-
-        } catch (UnsupportedEncodingException | MessagingException e) {
-            logger.log(Level.SEVERE, "Mail send error", e);
-            throw e;
-        }
-    }
 }
