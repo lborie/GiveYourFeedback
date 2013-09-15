@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Picker Example</title>
+    <script type="text/javascript">
+        // The API developer key obtained from the Google APIs Console.
+        var developerKey = 'AIzaSyCbEGwzJkS_ybo9whM_GcAYTsm1RH2DD9U';
+
+        // Use the API Loader script to load google.picker.
+        function loadPicker() {
+            gapi.load('picker', {'callback': createPicker});
+        }
+
+        // Create and render a Picker object for searching images.
+        function createPicker() {
+            var picker = new google.picker.PickerBuilder().
+                addView(google.picker.ViewId.FOLDERS).
+                addView(google.picker.ViewId.DOCS).
+                addView(google.picker.ViewId.SPREADSHEETS).
+                addView(google.picker.ViewId.DOCUMENTS).
+                addView(google.picker.ViewId.FORMS).
+                addView(google.picker.ViewId.PRESENTATIONS).
+                addView(google.picker.ViewId.PDFS).
+                addView(google.picker.ViewId.RECENTLY_PICKED).
+                addView(google.picker.ViewId.PHOTO_ALBUMS).
+                addView(google.picker.ViewId.PHOTO_UPLOAD).
+                addView(google.picker.ViewId.PHOTOS).
+                addView(google.picker.ViewId.IMAGE_SEARCH).
+                addView(google.picker.ViewId.DOCS_IMAGES).
+                addView(google.picker.ViewId.DOCS_IMAGES_AND_VIDEOS).
+                addView(google.picker.ViewId.DOCS_VIDEOS).
+                addView(google.picker.ViewId.WEBCAM).
+                addView(google.picker.ViewId.YOUTUBE).
+                addView(google.picker.ViewId.VIDEO_SEARCH).
+                addView(google.picker.ViewId.MAPS).
+                setDeveloperKey(developerKey).
+                setCallback(pickerCallback).
+                build();
+                picker.setVisible(true);
+        }
+
+        // A simple callback implementation.
+        function pickerCallback(data) {
+            var url = 'nothing';
+            if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+                var doc = data[google.picker.Response.DOCUMENTS][0];
+                url = doc[google.picker.Document.URL];
+            }
+            var message = 'You picked: ' + url;
+            document.getElementById('result').innerHTML = message;
+        }
+    </script>
+</head>
+<body>
+    <div id="result"></div>
+    <script src="https://apis.google.com/js/client.js?onload=loadPicker"></script>
+</body>
+</html>
