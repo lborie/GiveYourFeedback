@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
     <application>give-your-feedback</application>
-    <version>apiv2</version>
+    <version>1</version>
     <threadsafe>true</threadsafe>
 
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
     </system-properties>
+
+    <static-files>
+        <include path="/favicon.ico" />
+        <include path="/apple-touch-icon.png" />
+        <include path="/apple-touch-icon-precomposed.png" />
+    </static-files>
 </appengine-web-app>
