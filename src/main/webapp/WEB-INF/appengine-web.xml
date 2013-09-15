@@ -9,8 +9,12 @@
     </system-properties>
 
     <static-files>
-        <include path="/favicon.ico" />
-        <include path="/apple-touch-icon.png" />
-        <include path="/apple-touch-icon-precomposed.png" />
+        <include path="/favicon.ico" expiration="30d"/>
+        <include path="/apple-touch-icon.png" expiration="30d"/>
+        <include path="/apple-touch-icon-precomposed.png" expiration="30d"/>
+        <!--
+        <include path="/css/**.css" expiration="12h" />
+        <include path="/js/**" expiration="12h" />
+        -->
     </static-files>
 </appengine-web-app>
