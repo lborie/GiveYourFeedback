@@ -57,6 +57,11 @@
             <artifactId>google-api-client</artifactId>
             <version>1.16.0-rc</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>15.0</version>
+        </dependency>
 
         <!-- Test Dependencies -->
         <dependency>
