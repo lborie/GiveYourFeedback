@@ -47,7 +47,7 @@ public class ConferenceApi {
     private final GenericDao<Session> sessionDao = new GenericDao<>(Session.class);
     private final static Logger logger = Logger.getLogger(ConferenceApi.class.getName());
 
-    private final static String ADMINISRATOR = "l.borie@gmail.com";
+    private final static String ADMINISRATOR = "no-reply@give-your-feedback.appspotmail.com";
 
     @ApiMethod(
             name = "conferences.list",
@@ -145,7 +145,7 @@ public class ConferenceApi {
             msg.setHeader("Content-Type", encodingOptions);
             msg.setFrom(new javax.mail.internet.InternetAddress(ADMINISRATOR, "Give Your Feedback"));
             msg.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress(ADMINISRATOR));
+                    new InternetAddress("admins"));
             msg.setSubject("Nouvelle conférence créée !", "UTF-8");
             msg.setText("Une nouvelle conférence vient d'être créée (" + conference.getName() + "), et est en attente de votre validation.");
 
