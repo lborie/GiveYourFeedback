@@ -13,14 +13,18 @@ feedbackApp.controller("sessionController", function ($scope, SessionService, $r
     }
 
     $scope.newComment = function () {
+        var nickName = $scope.newComment.authorNickname;
+        var finalComment = {
+            content: $scope.newComment.content,
+            authorNickname: nickName
+        };
+        if (UserService.isLogged()){
+            nickName = UserService.getUser().name;
+        }
         SessionService.newComment({
-            comment: {
-                authorEmail: UserService.getUser().email,
-                content: $scope.newComment.content,
-                authorNickname: UserService.getUser().name
-            },
+            comment: finalComment,
             sessionId: $routeParams.idSession,
-            nickName: UserService.getUser().name
+            nickName: nickName
         }).execute(function (resp) {
                 $scope.session = resp.result;
                 $scope.$apply();

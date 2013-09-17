@@ -5,22 +5,14 @@
     <h3>{{ session.location }}</h3>
     <p>{{ session.description }}</p>
 </div>
-<div class="row" ng-repeat="comment in session.comments">
-    <h4>{{ comment.authorNickname }}</h4>
-    <p>{{ comment.content }}</p>
-</div>
 
-<div class="row" ng-show="isLogged()">
+<div class="row" style="padding-bottom: 5px;">
     <div class="col-md-4" >
         <form role="form">
-            <!--<div class="form-group">-->
-                <!--<label for="authorNickname">Pseudonyme</label>-->
-                <!--<input type="text" class="form-control" id="authorNickname" ng-model="newComment.authorNickname" placeholder="Toto">-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-                <!--<label for="authorEmail">Email</label>-->
-                <!--<input type="email" class="form-control" id="authorEmail" ng-model="newComment.email" placeholder="toto@gmail.com">-->
-            <!--</div>-->
+            <div class="form-group" ng-show="!isLogged()">
+                <label for="authorNickname">Pseudonyme</label>
+                <input type="text" class="form-control" id="authorNickname" ng-model="newComment.authorNickname" placeholder="Toto">
+            </div>
             <div class="form-group">
                 <label for="content">Commentaire</label>
                 <textarea type="textarea" class="form-control" id="content" rows="5" ng-model="newComment.content" placeholder="C'était top !"></textarea>
@@ -29,3 +21,11 @@
         </form>
     </div>
 </div>
+
+<div class="row" ng-repeat="comment in session.comments">
+    <div class="col-md-6"  style="border-top: 1px solid rgba(0, 0, 0, 0.14);">
+        <h4>{{ comment.authorNickname }}</h4>
+        <p>{{ comment.content }}</p>
+    </div>
+</div>
+
