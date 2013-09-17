@@ -18,7 +18,7 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
                 callback
             );
         }
-    }
+    };
 
     $scope.userAuthed = function() {
         gapi.client.oauth2.userinfo.get().execute(function(resp) {
@@ -45,7 +45,7 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
             }
             $scope.$apply();
         });
-    }
+    };
 
     $scope.auth = function() {
         if (!UserService.isLogged()){
@@ -61,10 +61,10 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
         }, apiRoot);
 
         gapi.client.load('oauth2', 'v2', function(){
-            console.log("signin ready")
+            console.log("signin ready");
             $scope.signin(true, $scope.userAuthed);
         });
-    }
+    };
 
     $window.init= function() {
         $scope.initBackend();
