@@ -10,15 +10,8 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
 
     // Init file picker for Illustration
     $("#conferenceIllustration").bind("change",function(event){
-        try{
-            var fileData = event.target.files[0];
-        }
-        catch(e) {
-            //'Insert Object' selected from the API Commands select list
-            //Display insert object button and then exit function
-            conferenceIllustration.style.display = 'block';
-            return;
-        }
+        var fileData = event.target.files[0];
+
         const boundary = '-------314159265358979323846';
         const delimiter = "\r\n--" + boundary + "\r\n";
         const close_delim = "\r\n--" + boundary + "--";
@@ -88,19 +81,13 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
     // Create and render a Picker object for searching images.
     $scope.createPicker = function() {
         var spreadSheetView = google.picker.ViewId.SPREADSHEETS;
-        var view = new google.picker.View(google.picker.ViewId.DOCS);
-        //view.setMimeTypes("image/png,image/jpeg,image/jpg");
+
         var picker = new google.picker.PickerBuilder()
             .setAppId('give-your-feedback')
             .addView(spreadSheetView)
             .setDeveloperKey('AIzaSyDSqZ_0qvYoL5q9CFho_gV4fYQ5Fx_6P0U')
             .setCallback($scope.pickerCallback)
             .build();
-            //.setOAuthToken(AUTH_TOKEN) //Optional: The auth token used in the current Drive API session.
-            //.enableFeature(google.picker.Feature.NAV_HIDDEN)
-            //.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-
-            //.addView(new google.picker.DocsUploadView())
 
         picker.setVisible(true);
     }
@@ -112,13 +99,11 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
             $scope.conference.spreadSheetId = chosenDoc.id;
             $scope.conference.spreadSheetUrl = chosenDoc.url;
             $scope.conference.userToken = UserService.getToken().originalAccessToken;
-//            $scope.conference.userToken = UserService.getToken().access_token;
             $scope.spreadsheetIcon = chosenDoc.iconUrl;
             $scope.spreadsheetName = chosenDoc.name;
             $scope.$apply();
 
             console.log('https://spreadsheets.google.com/feeds/spreadsheets/'+ chosenDoc.id + '?access_token=' + $scope.conference.userToken);
-
         }
     }
 
@@ -134,8 +119,6 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
             } else {
                 $("#importSuccess").removeClass("hide");
             }
-            console.log(resp);
-        })
+        });
     }
-
 });
