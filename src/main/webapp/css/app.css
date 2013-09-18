@@ -1,12 +1,21 @@
 body {
+    padding-bottom: 40px;
 }
 .navbar-static-top {
     margin-bottom: 19px;
 }
 .profile-image{
-    max-height: 50px;
+    max-height: 40px;
 }
 .gdg{
-    height:50px;
+    max-height:30px;
     margin:auto;
+}
+.mh30{
+    min-height: 30px;
+    max-height: 30px;
+}
+.session{
+    font-size: 16px;
+    line-height: 1.0;
 }
