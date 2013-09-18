@@ -1,8 +1,8 @@
 <!-- Main component for a primary marketing message or call to action -->
 <div class="jumbotron" ng-repeat="conference in conferences | filter:{validated:true}">
     <div class="row">
-        <div class="col-md-3"><img ng-src="{{ conference.baniereUrl }}" class="img-thumbnail img-responsive"/></div>
-        <div class="col-md-9">    <h1>{{ conference.name }}</h1> <h3><em>{{ conference.location }}</em></h3></h1>
+        <div class="col-md-3 text-center"><img ng-src="{{ conference.baniereUrl }}" class="img-thumbnail img-responsive conference-picture"/></div>
+        <div class="col-md-9"><h2>{{ conference.name }}</h2> <h4><em>{{ conference.location }}</em></h4>
             <p><a class="btn btn-primary" ng-href="#/conference/{{ conference.id }}">Afficher le planning</a></p></div>
     </div>
 

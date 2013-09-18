@@ -5,7 +5,10 @@ body {
     margin-bottom: 19px;
 }
 .profile-image{
-    max-height: 40px;
+    max-height: 50px;
+}
+.conference-picture{
+    max-height: 150px;
 }
 .gdg{
     max-height:30px;
