@@ -14,8 +14,10 @@ feedbackApp.controller("conferenceController", function ($scope, $routeParams, $
             $scope.locations = sessionsCache.locations;
             $scope.slots = sessionsCache.slots;
         } else {
+            $('.alert-info').removeClass("hide");
             SessionService.getSessions($routeParams.idConference)
                 .success(function (resp) {
+                    $('.alert-info').addClass("hide");
                     $scope.sessions = {};
                     $scope.locations = [];
                     $scope.slots = [];
@@ -47,7 +49,9 @@ feedbackApp.controller("conferenceController", function ($scope, $routeParams, $
         if (CacheService.getConferences()) {
             $scope.conferences = CacheService.getConferences();
         } else {
+            $('.alert-info').removeClass("hide");
             ConferenceService.fetch().success(function (resp) {
+                $('.alert-info').addClass("hide");
                 $scope.conferences = resp.items;
                 CacheService.setConferences(resp.items);
             });
