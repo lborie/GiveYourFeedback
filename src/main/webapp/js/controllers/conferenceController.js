@@ -13,6 +13,8 @@ feedbackApp.controller("conferenceController", function ($scope, $routeParams, $
             $scope.sessions = sessionsCache.sessions;
             $scope.locations = sessionsCache.locations;
             $scope.slots = sessionsCache.slots;
+            $scope.location1 = $scope.locations[1];
+            $scope.location2 = $scope.locations[0];
         } else {
             $('.alert-info').removeClass("hide");
             SessionService.getSessions($routeParams.idConference)
@@ -42,7 +44,9 @@ feedbackApp.controller("conferenceController", function ($scope, $routeParams, $
                         sessions : $scope.sessions,
                         locations : $scope.locations,
                         slots : $scope.slots
-                    })
+                    });
+                    $scope.location1 = $scope.locations[1];
+                    $scope.location2 = $scope.locations[0];
                 })
         }
     } else {
