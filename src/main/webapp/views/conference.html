@@ -1,18 +1,24 @@
 <!-- Main component for a primary marketing message or call to action -->
+<ol class="breadcrumb">
+    <li><a href="#/conference">Conferences</a></li>
+    <li class="active">Planning</li>
+</ol>
 <table class="table table-responsive">
     <thead>
         <tr>
             <th>Time</th>
-            <th ng-repeat="location in locations">{{location}}</th>
+            <th>{{ location1 }}</th>
+            <th>{{ location2 }}</th>
+            <!--<th ng-repeat="location in locations">{{location}}</th>-->
         </tr>
     </thead>
     <tbody >
         <tr ng-repeat="(slot, sessionLocation) in sessions">
             <td>{{slot}}</td>
             <td ng-repeat="(location, session) in sessionLocation">
-                <span class="label label-primary" ng-href="#/conference/{{ session.sessionUrl }}">
+                <a class="label label-primary" ng-href="#/conference/{{ session.sessionUrl }}">
                     {{ session.title }}
-                </span>
+                </a>
             </td>
         </tr>
     </tbody>

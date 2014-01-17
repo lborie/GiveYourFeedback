@@ -1,9 +1,24 @@
 body {
-    min-height: 2000px;
+    padding-bottom: 40px;
 }
 .navbar-static-top {
     margin-bottom: 19px;
 }
 .profile-image{
     max-height: 50px;
+}
+.conference-picture{
+    max-height: 150px;
+}
+.gdg{
+    max-height:30px;
+    margin:auto;
+}
+.mh30{
+    min-height: 30px;
+    max-height: 30px;
+}
+.session{
+    font-size: 16px;
+    line-height: 1.0;
 }

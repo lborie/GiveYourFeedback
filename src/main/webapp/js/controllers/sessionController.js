@@ -6,6 +6,7 @@
 feedbackApp.controller("sessionController", function ($scope, SessionService, $routeParams, UserService) {
 
     if ($routeParams.idConference && $routeParams.idSession) {
+        $scope.idConference = $routeParams.idConference;
         SessionService.getSession($routeParams.idSession)
             .success(function (resp) {
                 $scope.session = resp;

@@ -1,8 +1,13 @@
 <!-- Main component for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <h1>{{ session.title }}</h1>
-    <h3>{{ session.speaker }}</h3>
-    <h3>{{ session.location }}</h3>
+<ol class="breadcrumb">
+    <li><a href="#/conference">Conferences</a></li>
+    <li><a ng-href="#/conference/{{ idConference }}">Planning</a></li>
+    <li class="active">Session</li>
+</ol>
+<div class="jumbotron session">
+    <h2>{{ session.title }}</h2>
+    <h4>{{ session.speaker }}</h4>
+    <h4><em>{{ session.location }}</em></h4>
     <p>{{ session.description }}</p>
 </div>
 
