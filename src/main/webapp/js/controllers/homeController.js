@@ -13,8 +13,7 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
             gapi.auth.authorize({
                     client_id: '700903555117-17gcl1qf309d5meq269ffusooto7o03g.apps.googleusercontent.com',
                     scope: 'https://www.googleapis.com/auth/devstorage.full_control https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://spreadsheets.google.com/feeds https://docs.google.com/feeds',
-                    immediate: mode,
-                    response_type: 'token id_token'},
+                    immediate: mode},
                 callback
             );
         }
@@ -26,11 +25,6 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
             if (!resp.code) {
                 UserService.setUser(resp);
                 $scope.loginAction = resp.name;
-                var token = gapi.auth.getToken();
-                token.originalAccessToken = token.access_token;
-                token.access_token = token.id_token;
-                UserService.setToken(token);
-                gapi.auth.setToken(token);
                 $scope.profileUrl = resp.link;
                 $scope.profilePictureUrl = resp.picture;
 

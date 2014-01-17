@@ -3,7 +3,7 @@
 /**
  * Controller of the conference page
  */
-feedbackApp.controller("importController", function ($scope, $http, ConferenceService, UserService) {
+feedbackApp.controller("importController", function ($scope, $http, ConferenceService) {
     gapi.load('picker', {'callback': $scope.createPicker});
 
     $scope.conference = {};
@@ -42,13 +42,6 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
                     base64Data +
                     close_delim;
 
-            //Note: gapi.client.storage.objects.insert() can only insert
-            //small objects (under 64k) so to support larger file sizes
-            //we're using the generic HTTP request method gapi.client.request()
-            // HACK
-            var newToken = UserService.getToken();
-            newToken.access_token = newToken.originalAccessToken;
-            gapi.auth.setToken(newToken);
             var request = gapi.client.request({
                 'path': '/upload/storage/'+API_VERSION+'/b/' + BUCKET + '/o',
                 'method': 'POST',
@@ -64,11 +57,6 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
                 request.execute(function(resp) {
                     console.log(resp);
                     $scope.conference.baniereUrl = resp.mediaLink;
-                    var token = gapi.auth.getToken();
-                    token.originalAccessToken = token.access_token;
-                    token.access_token = token.id_token;
-                    UserService.setToken(token);
-                    gapi.auth.setToken(token);
                     $scope.$apply();
                 });
             }
@@ -98,12 +86,10 @@ feedbackApp.controller("importController", function ($scope, $http, ConferenceSe
             var chosenDoc = data.docs[0];
             $scope.conference.spreadSheetId = chosenDoc.id;
             $scope.conference.spreadSheetUrl = chosenDoc.url;
-            $scope.conference.userToken = UserService.getToken().originalAccessToken;
+            $scope.conference.userToken = gapi.auth.getToken().access_token;
             $scope.spreadsheetIcon = chosenDoc.iconUrl;
             $scope.spreadsheetName = chosenDoc.name;
             $scope.$apply();
-
-            console.log('https://spreadsheets.google.com/feeds/spreadsheets/'+ chosenDoc.id + '?access_token=' + $scope.conference.userToken);
         }
     }
 
