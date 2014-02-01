@@ -142,5 +142,6 @@
                 </executions>
             </plugin>
         </plugins>
+        <finalName>give-your-feedback</finalName>
     </build>
 </project>
