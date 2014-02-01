@@ -1,8 +1,8 @@
-package com.gdg.paris.feedbackyourjug.api;
+package com.gdg.france.giveyourfeedback.api;
 
-import com.gdg.paris.feedbackyourjug.dao.GenericDao;
-import com.gdg.paris.feedbackyourjug.model.Conference;
-import com.gdg.paris.feedbackyourjug.model.Session;
+import com.gdg.france.giveyourfeedback.dao.GenericDao;
+import com.gdg.france.giveyourfeedback.model.Conference;
+import com.gdg.france.giveyourfeedback.model.Session;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.appengine.api.oauth.OAuthRequestException;
@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  * (new, list, delete...)
  */
 @Api(
-        name = "feedbackyourjug",
+        name = "giveyourfeedback",
         version = "v2",
         clientIds = {Ids.WEB_CLIENT_ID, Ids.API_EXPLORER_ID}
 )

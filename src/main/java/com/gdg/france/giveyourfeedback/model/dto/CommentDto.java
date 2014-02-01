@@ -1,9 +1,6 @@
-package com.gdg.paris.feedbackyourjug.model.dto;
+package com.gdg.france.giveyourfeedback.model.dto;
 
-import com.gdg.paris.feedbackyourjug.model.Comment;
-import com.googlecode.objectify.annotation.Embed;
-
-import java.util.Date;
+import com.gdg.france.giveyourfeedback.model.Comment;
 
 public class CommentDto {
 

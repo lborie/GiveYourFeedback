@@ -1,4 +1,4 @@
-package com.gdg.paris.feedbackyourjug.dao;
+package com.gdg.france.giveyourfeedback.dao;
 
 import com.google.appengine.api.datastore.ReadPolicy;
 import com.googlecode.objectify.ObjectifyService;

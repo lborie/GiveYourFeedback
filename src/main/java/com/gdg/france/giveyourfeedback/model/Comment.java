@@ -1,7 +1,6 @@
-package com.gdg.paris.feedbackyourjug.model;
+package com.gdg.france.giveyourfeedback.model;
 
 import com.googlecode.objectify.annotation.Embed;
-import com.googlecode.objectify.annotation.Id;
 
 import java.util.Date;
 

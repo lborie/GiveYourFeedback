@@ -1,7 +1,7 @@
 "use strict";
 
 var feedbackApp = angular.module('feedbackApp', []);
-var ROOT_API = '/_ah/api/feedbackyourjug/v2';
+var ROOT_API = '/_ah/api/giveyourfeedback/v2';
 var API_VERSION = 'v1beta2';
 var BUCKET = 'conf-picture';
 

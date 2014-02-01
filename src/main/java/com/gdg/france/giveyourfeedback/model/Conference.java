@@ -1,4 +1,4 @@
-package com.gdg.paris.feedbackyourjug.model;
+package com.gdg.france.giveyourfeedback.model;
 
 
 import com.googlecode.objectify.annotation.Cache;

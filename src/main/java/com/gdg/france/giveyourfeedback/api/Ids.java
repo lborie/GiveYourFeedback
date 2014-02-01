@@ -1,4 +1,4 @@
-package com.gdg.paris.feedbackyourjug.api;
+package com.gdg.france.giveyourfeedback.api;
 
 /**
  * Contains the client IDs for allowed clients consuming the helloworld API.

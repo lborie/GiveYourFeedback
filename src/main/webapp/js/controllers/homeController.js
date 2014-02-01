@@ -50,7 +50,7 @@ feedbackApp.controller("mainController" ,function ($scope, $window, UserService)
     $scope.initBackend = function() {
         gapi.client.setApiKey('AIzaSyCbEGwzJkS_ybo9whM_GcAYTsm1RH2DD9U');
 
-        gapi.client.load('feedbackyourjug', 'v2', function(){
+        gapi.client.load('giveyourfeedback', 'v2', function(){
             $scope.backendReady = true;
         }, apiRoot);
 
