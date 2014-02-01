@@ -1,4 +1,4 @@
-FeedBackYourSummerCamp
+Give Your Feedback
 =============================================
 
 A "hello world" application for Google Cloud Endpoints in Java.
